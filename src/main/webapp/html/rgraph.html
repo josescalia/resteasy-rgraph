@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<h2 class="text-center">Demo RGraph With RestEasy and JSON</h2>
+<p>&nbsp;</p>
+<div class="row">
+    <div class="col-lg-4">
+        <canvas id="cvsDemoPie" width="350" height="250">[No canvas support]</canvas>
+    </div>
+    <div class="col-lg-4">
+        <canvas id="cvsDemoBar" width="350" height="250">[No canvas support]</canvas>
+    </div>
+    <div class="col-lg-4">
+        <canvas id="cvsDemoLine" width="350" height="250">[No canvas support]</canvas>
+    </div>
+</div>
+
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/rgraph/RGraph.common.core.js"></script>
+<script type="text/javascript" src="../js/rgraph/RGraph.common.dynamic.js"></script>
+<script type="text/javascript" src="../js/rgraph/RGraph.common.tooltips.js"></script>
+<script type="text/javascript" src="../js/rgraph/RGraph.bar.js"></script>
+<script type="text/javascript" src="../js/rgraph/RGraph.pie.js"></script>
+<script type="text/javascript" src="../js/rgraph/RGraph.line.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        console.log("initialize");
+        //call json restful service
+        $.getJSON("/services/graph/city_population", function(jsonData){
+
+            //generate rGraph using jsonData from json restful service
+            var pieGraph = new RGraph.Pie("cvsDemoPie", jsonData.rgraph.data)
+                    .Set("labels", jsonData.rgraph.labels)
+                    .Set("title", jsonData.rgraph.graphTitle)
+                    .Draw();
+
+            var barGraph = new RGraph.Bar("cvsDemoBar", jsonData.rgraph.data)
+                    .Set("labels", jsonData.rgraph.labels)
+                    .Set("title", jsonData.rgraph.graphTitle)
+                    .Draw();
+
+            var lineGraph = new RGraph.Line("cvsDemoLine", jsonData.rgraph.data)
+                    .Set("labels", jsonData.rgraph.labels)
+                    .Set("title", jsonData.rgraph.graphTitle)
+                    .Draw();
+
+
+        });
+    });
+</script>
+</body>
+</html>
