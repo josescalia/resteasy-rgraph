@@ -1,6 +1,9 @@
 package org.josescalia.resteasy.lab.controller;
 
+import org.josescalia.resteasy.lab.dao.DemographicDao;
+import org.josescalia.resteasy.lab.entity.Demographic;
 import org.josescalia.resteasy.lab.model.RGraphJsonModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,6 +20,10 @@ import javax.ws.rs.core.MediaType;
 @Controller
 @Path("/graph")
 public class RGraphJsonGenerator {
+
+
+    @Autowired
+    DemographicDao dao;
 
     @GET
     @Path("/city_population")
@@ -35,11 +42,38 @@ public class RGraphJsonGenerator {
         arrData[1] = 5;
         arrData[2] = 4;
 
-        //feel jsonModel
+        //fill jsonModel
         jsonModel.setGraphTitle("RGraph Demo");
         jsonModel.setLabels(arrLabel);
         jsonModel.setData(arrData);
 
+        //returning application/json
+        return jsonModel;
+    }
+
+    @GET
+    @Path("/population")
+    @Produces({MediaType.APPLICATION_JSON})
+    public RGraphJsonModel getPopulationData() {
+        //construct new RGraphJsonModel here...
+        RGraphJsonModel jsonModel = new RGraphJsonModel();
+        int totalRow = dao.getNum();
+        if(totalRow !=0) {
+            String[] arrLabel = new String[totalRow];
+            Integer[] arrData = new Integer[totalRow];
+
+            int x = 0;
+            for (Demographic demographic : dao.getAll()) {
+                arrLabel[x] = demographic.getCityName();
+                arrData[x] = demographic.getPopulation();
+                x++;
+            }
+
+            //fill jsonModel
+            jsonModel.setGraphTitle("RGraph Demo");
+            jsonModel.setLabels(arrLabel);
+            jsonModel.setData(arrData);
+        }
         //returning application/json
         return jsonModel;
     }

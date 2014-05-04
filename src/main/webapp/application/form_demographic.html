@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="col-lg-5">
+    <form id="formData">
+        <table class="table">
+            <tr>
+                <td><label for="cityName">City Name</label></td>
+                <td><input type="text" class="form-control" id="cityName" name="cityName"></td>
+            </tr>
+            <tr>
+                <td><label for="population">Population</label></td>
+                <td><input type="text" class="form-control" id="population" name="population"></td>
+            </tr>
+        </table>
+    </form>
+    <p>
+        <a href="#" id="btnSave" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-floppy-disk"></span> Save</a>
+        <a href="#" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-step-backward"></span>Cancel</a>
+    </p>
+</div>
+<script type="text/javascript" src="../js/bootbox.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#btnSave").click(function(){
+            $.post("../demographic/save",$("#formData").serialize(),function(jsonData){
+                //alert(jsonData.serverResponse.message)
+                bootbox.alert(jsonData.serverResponse.message, function(result){
+                    $('#formData').find("input[type=text], textarea").val("");
+                })
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

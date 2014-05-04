@@ -30,26 +30,27 @@
 <script type="text/javascript" src="../js/rgraph/RGraph.line.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        console.log("initialize");
         //call json restful service
-        $.getJSON("/services/graph/city_population", function(jsonData){
+        $.getJSON("/services/graph/population", function(jsonData){
+            if(jsonData.rgraph.data != null){
+                //generate rGraph using jsonData from json restful service
+                var pieGraph = new RGraph.Pie("cvsDemoPie", jsonData.rgraph.data)
+                        .Set("labels", jsonData.rgraph.labels)
+                        .Set("title", jsonData.rgraph.graphTitle)
+                        .Draw();
 
-            //generate rGraph using jsonData from json restful service
-            var pieGraph = new RGraph.Pie("cvsDemoPie", jsonData.rgraph.data)
-                    .Set("labels", jsonData.rgraph.labels)
-                    .Set("title", jsonData.rgraph.graphTitle)
-                    .Draw();
+                var barGraph = new RGraph.Bar("cvsDemoBar", jsonData.rgraph.data)
+                        .Set("labels", jsonData.rgraph.labels)
+                        .Set("title", jsonData.rgraph.graphTitle)
+                        .Draw();
 
-            var barGraph = new RGraph.Bar("cvsDemoBar", jsonData.rgraph.data)
-                    .Set("labels", jsonData.rgraph.labels)
-                    .Set("title", jsonData.rgraph.graphTitle)
-                    .Draw();
-
-            var lineGraph = new RGraph.Line("cvsDemoLine", jsonData.rgraph.data)
-                    .Set("labels", jsonData.rgraph.labels)
-                    .Set("title", jsonData.rgraph.graphTitle)
-                    .Draw();
-
+                var lineGraph = new RGraph.Line("cvsDemoLine", jsonData.rgraph.data)
+                        .Set("labels", jsonData.rgraph.labels)
+                        .Set("title", jsonData.rgraph.graphTitle)
+                        .Draw();
+            }else{
+                $("h2").next("p").html("<span class='text-danger'>No Data define, please fill up the data 1st..!!!</span>")
+            }
 
         });
     });

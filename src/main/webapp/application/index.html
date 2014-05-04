@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <title></title>
+</head>
+<body>
+
+<div class="nav navbar-default navbar-inverse navbar-fixed-top">
+    <ul class="nav navbar-nav">
+        <li class="navbar-brand">Test</li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Demographic</a>
+            <ul class="dropdown-menu">
+                <li><a href="#" content="form_demographic">New Demographic Data</a></li>
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" >Graph</a>
+            <ul class="dropdown-menu">
+                <li><a href="#" content="rgraph">Demographic Graph</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="container" id="mainContent">
+
+</div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $.get("welcome.html", function(htmlData){
+            $("#mainContent").html(htmlData);
+        });
+
+        $(".dropdown-menu a").click(function(){
+            $.get($(this).attr("content")+".html", function(htmlData){
+               $("#mainContent").html(htmlData);
+            });
+        })
+    })
+</script>
+</body>
+</html>

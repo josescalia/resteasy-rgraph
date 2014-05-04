@@ -34,7 +34,7 @@
     <servlet-mapping>
         <!--bypassing spring-mvc-view-->
         <servlet-name>default</servlet-name>
-        <url-pattern>/html/*</url-pattern>
+        <url-pattern>/application/*</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -46,6 +46,15 @@
     <servlet-mapping>
         <!--bypassing spring-mvc-view-->
         <servlet-name>default</servlet-name>
+        <url-pattern>/fonts/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <!--bypassing spring-mvc-view-->
+        <servlet-name>default</servlet-name>
         <url-pattern>/css/*</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>/services/application/index.html</welcome-file>
+    </welcome-file-list>
 </web-app>
